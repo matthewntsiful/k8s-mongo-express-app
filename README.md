@@ -49,12 +49,14 @@ This project demonstrates a complete Kubernetes deployment stack including:
 ## 🚀 Quick Start
 
 ### 1. Clone the Repository
+
 ```bash
 git clone <repository-url>
 cd k8s-mongo-express-app
 ```
 
 ### 2. Deploy to Kubernetes
+
 ```bash
 # Apply all manifests in order
 kubectl apply -f manifests/
@@ -69,6 +71,7 @@ kubectl apply -f manifests/06-ingress.yaml
 ```
 
 ### 3. Verify Deployment
+
 ```bash
 # Check all resources in mongo-db namespace
 kubectl get all -n mongo-db
@@ -81,6 +84,7 @@ kubectl get svc -n mongo-db
 ```
 
 ### 4. Access the Application
+
 ```bash
 # Add to /etc/hosts (Linux/macOS) or C:\Windows\System32\drivers\etc\hosts (Windows)
 echo "127.0.0.1 mongodb.local" >> /etc/hosts
@@ -91,7 +95,7 @@ http://mongodb.local
 
 ## 📁 Project Structure
 
-```
+```text
 k8s-mongo-express-app/
 ├── manifests/
 │   ├── 01-namespace.yaml      # Kubernetes namespace
@@ -132,6 +136,7 @@ k8s-mongo-express-app/
 ## 🛠️ Customization
 
 ### Scaling Replicas
+
 ```bash
 # Scale MongoDB
 kubectl scale deployment mongodb-deploy -n mongo-db --replicas=3
@@ -141,6 +146,7 @@ kubectl scale deployment mongo-express-deploy -n mongo-db --replicas=3
 ```
 
 ### Updating Credentials
+
 ```bash
 # Create new secret with custom credentials
 kubectl create secret generic mongo-secret \
@@ -150,7 +156,9 @@ kubectl create secret generic mongo-secret \
 ```
 
 ### Resource Adjustment
+
 Edit the `resources` section in deployment manifests:
+
 ```yaml
 resources:
   requests:
@@ -164,6 +172,7 @@ resources:
 ## 🔍 Monitoring & Troubleshooting
 
 ### Check Pod Logs
+
 ```bash
 # MongoDB logs
 kubectl logs -f deployment/mongodb-deploy -n mongo-db
@@ -173,6 +182,7 @@ kubectl logs -f deployment/mongo-express-deploy -n mongo-db
 ```
 
 ### Debug Connection Issues
+
 ```bash
 # Test MongoDB connectivity
 kubectl exec -it deployment/mongodb-deploy -n mongo-db -- mongo --eval "db.adminCommand('ismaster')"
@@ -200,18 +210,21 @@ kubectl get endpoints -n mongo-db
 ## 📈 Production Considerations
 
 ### High Availability
+
 - Deploy across multiple nodes
 - Use persistent volumes for MongoDB data
 - Implement backup strategies
 - Configure health checks
 
 ### Security Hardening
+
 - Enable TLS/SSL encryption
 - Use custom certificates
 - Implement network policies
 - Regular security updates
 
 ### Performance Optimization
+
 - Adjust resource limits based on workload
 - Configure MongoDB replica sets
 - Implement caching strategies
@@ -238,4 +251,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Built with ❤️ for the Kubernetes community**
+## Built with ❤️ for the Kubernetes community
