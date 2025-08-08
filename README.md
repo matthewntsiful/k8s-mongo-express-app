@@ -43,7 +43,7 @@ In enterprise environments, database management requires robust, scalable, and s
 
 > 💡 **Note**: This table highlights the key production benefits of this deployment
 
-## 🏗️ Deployment Architecture
+## 🏗️ Deployment Architecture Components
 
 ```mermaid
 graph TD
@@ -89,7 +89,7 @@ graph TD
     click nginx "#ingress" _self
 ```
 
-### Component Details
+### Deployment Component Details
 
 - **📊 MongoDB Database**: High-availability NoSQL database with persistent storage and automatic failover
 - **🌐 Mongo Express**: Modern web interface for MongoDB administration with role-based access control
