@@ -53,39 +53,64 @@ graph TD
     classDef k8s fill:#fff3e0,stroke:#ff9800,color:#e65100,stroke-width:2px
     classDef ingress fill:#f3e5f5,stroke:#9c27b0,color:#6a1b9a,stroke-width:2px
     classDef resource fill:#e0f7fa,stroke:#00bcd4,color:#006064,stroke-width:2px
+    classDef user fill:#f5f5f5,stroke:#9e9e9e,color:#212121,stroke-width:2px
     
-    %% Nodes
-    mdb1[(📊 MongoDB\nDatabase)]
-    mdb2[(📊 MongoDB\nReplica)]
-    mdbSvc[MongoDB Service\nPort 27017]
-    
-    me[🌐 Mongo Express\nWeb Interface]
-    meSvc[Mongo Express Service\nPort 8081]
-    
-    k8s[⚙️ Kubernetes\nManifests]
-    res[📈 Resource\nManagement]
-    
-    nginx[🌉 NGINX Ingress\nPort 80/443]
+    %% User Access
     user[👤 User Access]
+    browser[🌐 Web Browser]
+    
+    %% Ingress Layer
+    subgraph Ingress Layer
+        nginx[NGINX Ingress\nPort 80/443\nPath: / → mongo-express-svc:8081]
+    end
+    
+    %% Mongo Express Cluster
+    subgraph "Mongo Express Deployment (2 Replicas)"
+        me1[📱 Mongo Express Pod 1\nPort 8081]
+        me2[📱 Mongo Express Pod 2\nPort 8081]
+        meSvc[[Mongo Express Service\nLoadBalancer\nPort 8081 → 8081]]
+    end
+    
+    %% MongoDB Cluster
+    subgraph "MongoDB ReplicaSet (2 Nodes)"
+        mdb1[(📦 MongoDB Primary\nPod 1\nPort 27017)]
+        mdb2[(📦 MongoDB Secondary\nPod 2\nPort 27017)]
+        mdbSvc[[MongoDB Service\nClusterIP\nPort 27017]]
+    end
+    
+    %% Configuration
+    subgraph "Kubernetes Configuration"
+        config[📄 ConfigMap\nME_CONFIG_MONGODB_SERVER=mongodb-svc\nME_CONFIG_BASICAUTH_USERNAME=admin]
+        secret[🔑 Secret\nmongo-root-username\nmongo-root-password]
+    end
     
     %% Connections
-    mdb1 --> mdbSvc
-    mdb2 --> mdbSvc
-    me --> mdbSvc
-    meSvc --> me
-    nginx --> meSvc
-    user --> nginx
+    user -->|HTTP/HTTPS| browser
+    browser -->|Request| nginx
+    nginx -->|Route| meSvc
+    meSvc -->|Load Balance| me1
+    meSvc -->|Load Balance| me2
+    me1 -->|Connect| mdbSvc
+    me2 -->|Connect| mdbSvc
+    mdbSvc -->|Replication| mdb1
+    mdbSvc -->|Replication| mdb2
+    
+    %% Configuration Connections
+    me1 -->|Reads| config
+    me2 -->|Reads| config
+    me1 -->|Reads| secret
+    me2 -->|Reads| secret
     
     %% Apply styles
     class mdb1,mdb2,mdbSvc mongo
-    class me,meSvc express
-    class k8s k8s
+    class me1,me2,meSvc express
     class nginx ingress
-    class res resource
+    class config,secret k8s
+    class user,browser user
     
     %% Legend
     click mdb1 "#mongodb" _self
-    click me "#mongo-express" _self
+    click me1 "#mongo-express" _self
     click nginx "#ingress" _self
 ```
 
