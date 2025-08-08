@@ -74,7 +74,6 @@ graph TD
 - **Configuration**: Managed using Kubernetes Secrets and ConfigMaps
 - **Ingress**: NGINX Ingress Controller routes traffic to Mongo Express
 
-
 ### Why This Deployment Matters in Production
 
 In enterprise environments, database management requires robust, scalable, and secure solutions. This Kubernetes deployment addresses critical production needs:
