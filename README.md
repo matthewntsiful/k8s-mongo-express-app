@@ -17,18 +17,33 @@ A production-ready Kubernetes deployment of MongoDB with Mongo Express web inter
 ## 🏗️ Architecture Overview
 
 ![Kubernetes MongoDB Express Architecture](./assets/architecture-diagram.png)
-*Architecture diagram showing the Kubernetes deployment of MongoDB and Mongo Express*
+*Figure 1: Detailed architecture of the Kubernetes MongoDB Express deployment showing cluster components and network flow*
 
 ### Component Details
 
-- **MongoDB**: Runs in 2 pods for high availability, exposed via ClusterIP service on port 27017
-- **Mongo Express**: Web interface running in 2 pods, exposed via LoadBalancer service on port 8081 (NodePort: 32000)
-- **Configuration**: Managed using Kubernetes Secrets and ConfigMaps
-- **Ingress**: NGINX Ingress Controller routes traffic to Mongo Express
+- **📊 MongoDB Database**:
+  - High-availability NoSQL database with persistent storage
+  - Runs in 2 pods for high availability
+  - Exposed via ClusterIP service on port 27017
+  - Automatic failover and data replication
 
-### 🚀 Why This Deployment Matters in Production
+- **🌐 Mongo Express**:
+  - Modern web interface for MongoDB administration
+  - Runs in 2 pods for high availability
+  - Exposed via LoadBalancer service on port 8081 (NodePort: 32000)
+  - Role-based access control
 
-In enterprise environments, database management requires robust, scalable, and secure solutions. This Kubernetes deployment addresses critical production needs:
+- **⚙️ Configuration**:
+  - Managed using Kubernetes Secrets for sensitive data
+  - ConfigMaps for application settings
+  - Namespace isolation for security
+
+- **🌉 NGINX Ingress**:
+  - Routes external traffic to Mongo Express
+  - SSL/TLS termination support
+  - Path-based routing configuration
+
+### 🚀 Production Benefits
 
 | Feature | Benefit |
 |---------|---------|
@@ -41,20 +56,7 @@ In enterprise environments, database management requires robust, scalable, and s
 | **Observability** | 📊 Centralized logging and monitoring |
 | **DevOps Ready** | 🔄 Infrastructure-as-code for CI/CD pipelines |
 
-> 💡 **Note**: This table highlights the key production benefits of this deployment
-
-## 🏗️ Deployment Architecture Components
-
-![Kubernetes MongoDB Express Architecture](./assets/architecture-diagram.png)
-*Figure 1: Detailed architecture of the Kubernetes MongoDB Express deployment showing cluster components and network flow*
-
-### Deployment Component Details
-
-- **📊 MongoDB Database**: High-availability NoSQL database with persistent storage and automatic failover
-- **🌐 Mongo Express**: Modern web interface for MongoDB administration with role-based access control
-- **⚙️ Kubernetes Resources**: Production-grade manifests following security best practices
-- **🌉 NGINX Ingress**: Secure external access with SSL termination and path-based routing
-- **📈 Resource Management**: Optimized CPU and memory allocation with auto-scaling capabilities
+> 💡 **Note**: This deployment follows Kubernetes best practices for production workloads
 
 ## 📋 Prerequisites
 
