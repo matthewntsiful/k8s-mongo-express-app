@@ -18,27 +18,27 @@ A production-ready Kubernetes deployment of MongoDB with Mongo Express web inter
 
 ```mermaid
 graph TD
-    subgraph Kubernetes Cluster
-        subgraph mongo-db[Namespace: mongo-db]
+    subgraph Kubernetes_Cluster[Kubernetes Cluster]
+        subgraph mongo_db[Namespace: mongo-db]
             subgraph MongoDB
                 mdb1[(MongoDB Pod 1)]
                 mdb2[(MongoDB Pod 2)]
-                mdbSvc[MongoDB Service\n27017]
+                mdbSvc[MongoDB Service<br>27017]
                 mdb1 --> mdbSvc
                 mdb2 --> mdbSvc
             end
             
-            subgraph Mongo Express
+            subgraph Mongo_Express
                 me1[Mongo Express Pod 1]
                 me2[Mongo Express Pod 2]
-                meSvc[Mongo Express Service\n8081 (NodePort: 32000)]
+                meSvc[Mongo Express Service<br>8081 (NodePort: 32000)]
                 me1 --> meSvc
                 me2 --> meSvc
             end
             
             subgraph Configuration
-                secret[Secret\n- Credentials\n- Passwords]
-                config[ConfigMap\n- Database URL\n- Auth Settings]
+                secret[Secret<br>- Credentials<br>- Passwords]
+                config[ConfigMap<br>- Database URL<br>- Auth Settings]
             end
             
             me1 -->|Connects to| mdbSvc
@@ -50,14 +50,14 @@ graph TD
             me2 -->|Uses| secret
         end
         
-        ingress[NGINX Ingress\nmongodb.local] --> meSvc
+        ingress[NGINX Ingress<br>mongodb.local] --> meSvc
     end
     
     User[User] -->|Accesses| ingress
     
-    style mongo-db fill:#f9f9f9,stroke:#333,stroke-width:2px
+    style mongo_db fill:#f9f9f9,stroke:#333,stroke-width:2px
     style MongoDB fill:#e1f5fe,stroke:#039be5
-    style Mongo Express fill:#e8f5e9,stroke:#43a047
+    style Mongo_Express fill:#e8f5e9,stroke:#43a047
     style Configuration fill:#f3e5f5,stroke:#8e24aa
     style ingress fill:#fff3e0,stroke:#fb8c00
 ```
