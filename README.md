@@ -16,6 +16,52 @@ A production-ready Kubernetes deployment of MongoDB with Mongo Express web inter
 
 ## 🏗️ Architecture Overview
 
+```mermaid
+graph TD
+    subgraph Kubernetes Cluster
+        subgraph mongo-db[Namespace: mongo-db]
+            subgraph MongoDB
+                mdb1[(MongoDB Pod 1)]
+                mdb2[(MongoDB Pod 2)]
+                mdbSvc[MongoDB Service\n27017]
+                mdb1 --> mdbSvc
+                mdb2 --> mdbSvc
+            end
+            
+            subgraph Mongo Express
+                me1[Mongo Express Pod 1]
+                me2[Mongo Express Pod 2]
+                meSvc[Mongo Express Service\n8081 (NodePort: 32000)]
+                me1 --> meSvc
+                me2 --> meSvc
+            end
+            
+            subgraph Configuration
+                secret[Secret\n- Credentials\n- Passwords]
+                config[ConfigMap\n- Database URL\n- Auth Settings]
+            end
+            
+            me1 -->|Connects to| mdbSvc
+            me2 -->|Connects to| mdbSvc
+            
+            me1 -->|Uses| config
+            me1 -->|Uses| secret
+            me2 -->|Uses| config
+            me2 -->|Uses| secret
+        end
+        
+        ingress[NGINX Ingress\nmongodb.local] --> meSvc
+    end
+    
+    User[User] -->|Accesses| ingress
+    
+    style mongo-db fill:#f9f9f9,stroke:#333,stroke-width:2px
+    style MongoDB fill:#e1f5fe,stroke:#039be5
+    style Mongo Express fill:#e8f5e9,stroke:#43a047
+    style Configuration fill:#f3e5f5,stroke:#8e24aa
+    style ingress fill:#fff3e0,stroke:#fb8c00
+```
+
 ### Why This Deployment Matters in Production
 
 In enterprise environments, database management requires robust, scalable, and secure solutions. This Kubernetes deployment addresses critical production needs:
