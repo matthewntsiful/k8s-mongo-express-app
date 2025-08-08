@@ -91,15 +91,59 @@ In enterprise environments, database management requires robust, scalable, and s
 
 > 💡 **Note**: This table highlights the key production benefits of this deployment
 
-### Architecture Components
+## 🏗️ Architecture Components
 
-This project demonstrates a complete Kubernetes deployment stack including:
+```mermaid
+graph TD
+    %% Styling
+    classDef mongo fill:#e3f2fd,stroke:#2196f3,color:#0d47a1,stroke-width:2px
+    classDef express fill:#e8f5e9,stroke:#4caf50,color:#1b5e20,stroke-width:2px
+    classDef k8s fill:#fff3e0,stroke:#ff9800,color:#e65100,stroke-width:2px
+    classDef ingress fill:#f3e5f5,stroke:#9c27b0,color:#6a1b9a,stroke-width:2px
+    classDef resource fill:#e0f7fa,stroke:#00bcd4,color:#006064,stroke-width:2px
+    
+    %% Nodes
+    mdb1[(📊 MongoDB\nDatabase)]
+    mdb2[(📊 MongoDB\nReplica)]
+    mdbSvc[MongoDB Service\nPort 27017]
+    
+    me[🌐 Mongo Express\nWeb Interface]
+    meSvc[Mongo Express Service\nPort 8081]
+    
+    k8s[⚙️ Kubernetes\nManifests]
+    res[📈 Resource\nManagement]
+    
+    nginx[🌉 NGINX Ingress\nPort 80/443]
+    user[👤 User Access]
+    
+    %% Connections
+    mdb1 --> mdbSvc
+    mdb2 --> mdbSvc
+    me --> mdbSvc
+    meSvc --> me
+    nginx --> meSvc
+    user --> nginx
+    
+    %% Apply styles
+    class mdb1,mdb2,mdbSvc mongo
+    class me,meSvc express
+    class k8s k8s
+    class nginx ingress
+    class res resource
+    
+    %% Legend
+    click mdb1 "#mongodb" _self
+    click me "#mongo-express" _self
+    click nginx "#ingress" _self
+```
 
-- **MongoDB Database**: Scalable NoSQL database with persistent storage
-- **Mongo Express**: Web-based MongoDB administration interface
-- **Kubernetes Resources**: Comprehensive K8s manifests with security best practices
-- **Ingress Controller**: NGINX-based routing for external access
-- **Resource Management**: CPU and memory allocation for optimal performance
+### Component Details
+
+- **📊 MongoDB Database**: High-availability NoSQL database with persistent storage and automatic failover
+- **🌐 Mongo Express**: Modern web interface for MongoDB administration with role-based access control
+- **⚙️ Kubernetes Resources**: Production-grade manifests following security best practices
+- **🌉 NGINX Ingress**: Secure external access with SSL termination and path-based routing
+- **📈 Resource Management**: Optimized CPU and memory allocation with auto-scaling capabilities
 
 ## 📋 Prerequisites
 
