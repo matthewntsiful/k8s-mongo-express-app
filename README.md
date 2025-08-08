@@ -16,56 +16,8 @@ A production-ready Kubernetes deployment of MongoDB with Mongo Express web inter
 
 ## 🏗️ Architecture Overview
 
-```mermaid
-graph TD
-    classDef mongo fill:#e1f5fe,stroke:#039be5
-    classDef express fill:#e8f5e9,stroke:#43a047
-    classDef config fill:#f3e5f5,stroke:#8e24aa
-    classDef ingress fill:#fff3e0,stroke:#fb8c00
-    
-    %% MongoDB Components
-    mdb1[(MongoDB Pod 1)]
-    mdb2[(MongoDB Pod 2)]
-    mdbSvc[MongoDB Service]
-    
-    %% Mongo Express Components
-    me1[Mongo Express Pod 1]
-    me2[Mongo Express Pod 2]
-    meSvc[Mongo Express Service]
-    
-    %% Configuration
-    secret[Secret]
-    config[ConfigMap]
-    
-    %% Ingress and User
-    ingress[NGINX Ingress]
-    User[User]
-    
-    %% Connections
-    mdb1 --> mdbSvc
-    mdb2 --> mdbSvc
-    me1 --> meSvc
-    me2 --> meSvc
-    me1 -->|Connects to| mdbSvc
-    me2 -->|Connects to| mdbSvc
-    me1 -->|Uses| config
-    me1 -->|Uses| secret
-    me2 -->|Uses| config
-    me2 -->|Uses| secret
-    ingress --> meSvc
-    User -->|Accesses| ingress
-    
-    %% Apply styles
-    class mdb1,mdb2,mdbSvc mongo
-    class me1,me2,meSvc express
-    class secret,config config
-    class ingress ingress
-    
-    %% Legend
-    click mdb1 "#mongodb" _self
-    click me1 "#mongo-express" _self
-    click ingress "#ingress" _self
-```
+![Kubernetes MongoDB Express Architecture](./assets/architecture-diagram.png)
+*Architecture diagram showing the Kubernetes deployment of MongoDB and Mongo Express*
 
 ### Component Details
 
@@ -91,7 +43,7 @@ In enterprise environments, database management requires robust, scalable, and s
 
 > 💡 **Note**: This table highlights the key production benefits of this deployment
 
-## 🏗️ Architecture Components
+## 🏗️ Deployment Architecture
 
 ```mermaid
 graph TD
