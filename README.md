@@ -68,10 +68,12 @@ graph TD
 ```
 
 ### Component Details
+
 - **MongoDB**: Runs in 2 pods for high availability, exposed via ClusterIP service on port 27017
 - **Mongo Express**: Web interface running in 2 pods, exposed via LoadBalancer service on port 8081 (NodePort: 32000)
 - **Configuration**: Managed using Kubernetes Secrets and ConfigMaps
 - **Ingress**: NGINX Ingress Controller routes traffic to Mongo Express
+
 
 ### Why This Deployment Matters in Production
 
@@ -153,34 +155,34 @@ http://mongodb.local
 ## 📁 Project Structure
 
 ```text
-k8s-mongo-express-app/
-├── manifests/
-│   ├── 01-namespace.yaml      # Kubernetes namespace
-│   ├── 02-secret.yaml         # MongoDB credentials
-│   ├── 03-configmap.yaml      # Application configuration
-│   ├── 04-mongodb.yaml        # MongoDB deployment & service
-│   ├── 05-mongo-express.yaml  # Mongo Express deployment & service
-│   └── 06-ingress.yaml        # Ingress routing configuration
-├── assets/                    # Documentation assets
-├── README.md                  # Project documentation
-└── LICENSE                    # License file
+📦 k8s-mongo-express-app
+├── 📂 manifests/               # Kubernetes configuration files
+│   ├── 01-namespace.yaml      # 🔒 Kubernetes namespace
+│   ├── 02-secret.yaml         # 🔑 MongoDB credentials
+│   ├── 03-configmap.yaml      # ⚙️  Application configuration
+│   ├── 04-mongodb.yaml        # 🍃 MongoDB deployment & service
+│   ├── 05-mongo-express.yaml  # 🌐 Mongo Express deployment & service
+│   └── 06-ingress.yaml        # 🌍 Ingress routing configuration
+├── 📂 assets/                 # 🖼️  Documentation assets
+├── 📄 README.md               # 📖 Project documentation
+└── 📄 LICENSE                 # ⚖️  License file
 ```
 
 ## 🔧 Configuration Details
 
-### Resource Allocation
+### 📊 Resource Allocation
 
-| Component | CPU Request | Memory Request | CPU Limit | Memory Limit |
-|-----------|-------------|----------------|-----------|--------------|
-| MongoDB | 250m | 256Mi | 500m | 512Mi |
-| Mongo Express | 100m | 128Mi | 200m | 256Mi |
+| Component      | CPU Request | Memory Request | CPU Limit | Memory Limit |
+|----------------|-------------|----------------|-----------|--------------|
+| **MongoDB**    | `250m`      | `256Mi`        | `500m`    | `512Mi`      |
+| **Mongo Express** | `100m`   | `128Mi`        | `200m`    | `256Mi`      |
 
-### Default Credentials
+### 🔐 Default Credentials
 
-| Service | Username | Password |
-|---------|----------|----------|
-| MongoDB | root | passwd |
-| Mongo Express | admin | pass |
+| Service         | Username | Password |
+|-----------------|----------|----------|
+| **MongoDB**     | `root`   | `passwd` |
+| **Mongo Express** | `admin` | `pass`   |
 
 > ⚠️ **Security Notice**: Change default credentials before production deployment
 
